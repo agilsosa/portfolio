@@ -1,0 +1,40 @@
+---
+import Tag from "../Tag.astro";
+import EntryTitle from "../EntryTitle.astro";
+
+interface Props {
+    business: string;
+    time: string;
+    title: string;
+    description: string;
+    tags?: string[];
+    href?: string;
+}
+
+const { business, time, title, description, tags, href } = Astro.props;
+---
+
+<li class="mb-8">
+    <div class="flex justify-between flex-col md:flex-row">
+        <div class="flex">
+            <div>
+                <div class="flex">
+                    <EntryTitle text={business} {href} />
+                </div>
+
+                <p class="text-sm font-bold mb-1">{title}</p>
+            </div>
+        </div>
+        <p class="text-muted-foreground text-sm">{time}</p>
+    </div>
+    <p class="text-sm mb-0.5">
+        {description}
+    </p>
+
+    <ul class="text-sm list-disc pl-4">
+        <slot />
+    </ul>
+    <ul class="flex mt-2 flex-wrap">
+        {tags?.map((tag) => <Tag text={tag} />)}
+    </ul>
+</li>

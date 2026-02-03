@@ -1,0 +1,57 @@
+---
+import type { SvgComponent } from "astro/types";
+
+interface Props {
+    text: string;
+    href?: string;
+    icon?: SvgComponent;
+    tooltipText?: string;
+}
+const { href, text, tooltipText, icon } = Astro.props;
+
+const id = text.toLocaleLowerCase().replaceAll(" ", "") + "description";
+---
+
+{
+    href ? (
+        <a
+            aria-describedby={id}
+            class="font-bold hover:underline underline-offset-2"
+            href={href}
+            target="_blank"
+        >
+            {text}
+        </a>
+    ) : (
+        <p aria-describedby={id} class="font-bold">
+            {text}
+        </p>
+    )
+}
+{
+    tooltipText && (
+        <div role="tooltip" {id} class="absolute bg-muted  text-xs p-0.5">
+            {tooltipText}
+        </div>
+    )
+}
+
+<style>
+    [role="tooltip"] {
+        visibility: hidden;
+        position: absolute;
+        border-radius: 0.25rem;
+        transition: visibility 0.5s;
+        right: 4rem;
+    }
+    [aria-describedby]:hover,
+    [aria-describedby]:focus {
+        position: relative;
+    }
+    [aria-describedby]:hover + [role="tooltip"],
+    [aria-describedby]:focus + [role="tooltip"],
+    [role="tooltip"]:hover,
+    [role="tooltip"]:focus {
+        visibility: visible;
+    }
+</style>

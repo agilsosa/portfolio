@@ -1,0 +1,21 @@
+<script>
+    const colorScheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "dark"
+        : "light";
+
+    const body = document.body;
+
+    body.classList.add(colorScheme);
+
+    function toggleTheme() {
+        body.classList.toggle("dark");
+        body.classList.toggle("light");
+    }
+
+    document
+        .querySelector("#themeToggler")!
+        .addEventListener("click", toggleTheme);
+</script>
+
+<button id="themeToggler">Toggle</button>

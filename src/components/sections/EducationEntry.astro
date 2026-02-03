@@ -1,0 +1,23 @@
+---
+import EntryTitle from "../EntryTitle.astro";
+
+interface Props {
+    institution: string;
+    title: string;
+    time: string;
+    href?: string;
+}
+
+const { institution, title, time, href } = Astro.props;
+---
+
+<li>
+    <div class="flex justify-between flex-col md:flex-row">
+        <div>
+            <EntryTitle text={institution} {href} />
+
+            <p class="text-sm">{title}</p>
+        </div>
+        <p class="text-muted-foreground text-sm">{time}</p>
+    </div>
+</li>

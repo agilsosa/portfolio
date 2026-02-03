@@ -1,0 +1,50 @@
+---
+import Layout from "../layouts/Layout.astro";
+import EducationSection from "../components/sections/EducationSection.astro";
+import WorkSection from "../components/sections/WorkSection.astro";
+import Contact from "../components/Contact.astro";
+---
+
+<Layout>
+	<header class="mb-4">
+		<div class="inline-block">
+			<h1
+				class="name sm:text-5xl text-4xl font-bold tracking-wide border-r-4 border-solid w-full whitespace-nowrap overflow-hidden sm:h-[3.2rem] h-10"
+			>
+				Agustín Gil
+			</h1>
+		</div>
+		<h2 class="mt-1 mb-2 font-bold">Systems Engineer - Web Developer</h2>
+		<Contact />
+	</header>
+	<main>
+		<p class="text-sm">
+			I’m a Web Developer with a passion for building clean and scalable
+			applications. With a background in Systems Engineer, I bridge the
+			gap between complex backend systems and intuitive frontend
+			experiences using modern technologies.
+		</p>
+		<WorkSection />
+		<EducationSection />
+	</main>
+</Layout>
+
+<style>
+	.name {
+		animation:
+			typing 2s steps(11),
+			cursor 0.4s step-end infinite alternate;
+	}
+
+	@keyframes cursor {
+		50% {
+			border-color: transparent;
+		}
+	}
+
+	@keyframes typing {
+		from {
+			width: 0;
+		}
+	}
+</style>

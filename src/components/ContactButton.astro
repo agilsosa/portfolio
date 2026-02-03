@@ -1,0 +1,23 @@
+---
+import type { SvgComponent } from "astro/types";
+
+interface Props {
+    Icon: SvgComponent;
+    href: string;
+    label: string;
+}
+const { Icon, href, label } = Astro.props;
+---
+
+<li>
+    <a
+        href={href}
+        class="border-solid border border-muted rounded-lg w-8 h-8 hover:bg-muted transition-all duration-75 cursor-pointer flex justify-center items-center"
+        aria-label={label}
+        ><Icon
+            stroke="var(--color-foreground)"
+            stroke-width="2px"
+            class="w-5 h-5"
+        /></a
+    >
+</li>

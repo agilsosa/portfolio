@@ -1,0 +1,50 @@
+---
+import PortfolioSection from "./PortfolioSection.astro";
+import WorkEntry from "./WorkEntry.astro";
+---
+
+<PortfolioSection title="Work Experience">
+    <ul>
+        <WorkEntry
+            business="STB Academy"
+            time="2025 - Present"
+            title="Robotics and Programming Instructor"
+            description="Educational institution focused on technology training and robotics programs for various skill levels."
+            tags={["Robotics", "Arduino", "Education", "C++"]}
+        >
+            <li>
+                Taught foundational and advanced robotics concepts to diverse
+                age groups.
+            </li>
+            <li>
+                Designed comprehensive curricula and hands-on educational
+                materials.
+            </li>
+            <li>
+                Mentored students in technology and innovation through
+                project-based learning.
+            </li>
+        </WorkEntry>
+
+        <WorkEntry
+            business="Redes IP"
+            time="2025 - 2025"
+            title="Internship, Programming Department"
+            description="Back-end architect for a custom enterprise ticketing and project management ecosystem."
+            tags={["PostgreSQL", "Typescript", "ExpressJS"]}
+        >
+            <li>
+                Developed a scalable backend from scratch using TypeScript,
+                Express.js, and PostgreSQL.
+            </li>
+            <li>
+                Architected and managed the core database schema and RESTful API
+                infrastructure.
+            </li>
+            <li>
+                Implemented secure authentication and granular role-based access
+                control (RBAC) systems.
+            </li>
+        </WorkEntry>
+    </ul>
+</PortfolioSection>

@@ -1,0 +1,26 @@
+---
+import ContactButton from "./ContactButton.astro";
+import Mail from "../assets/mail.svg";
+import Github from "../assets/github.svg";
+import Linkedin from "../assets/linkedin.svg";
+---
+
+<nav class="mt-2">
+    <ul class="flex gap-2">
+        <ContactButton
+            Icon={Mail}
+            href="mailto:agustingilsosa@gmail.com"
+            label="mail"
+        />
+        <ContactButton
+            Icon={Github}
+            href="https://github.com/agilsosa"
+            label="github"
+        />
+        <ContactButton
+            Icon={Linkedin}
+            href="https://www.linkedin.com/in/agust%C3%ADn-gil-537522355/"
+            label="linkedin"
+        />
+    </ul>
+</nav>

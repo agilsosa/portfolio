@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --light-background: #fbf1c7;
+  --light-foreground: #3c3836;
+  --light-card: #fbf1c7;
+  --light-card-foreground: #3c3836;
+  --light-primary: #458588;
+  --light-primary-foreground: #fbf1c7;
+  --light-secondary: #ebdbb2;
+  --light-secondary-foreground: #3c3836;
+  --light-muted: #d5c4a1;
+  --light-muted-foreground: #665c54;
+  --light-accent: #d65d0e;
+  --light-accent-foreground: #fbf1c7;
+  --light-destructive: #cc241d;
+  --light-destructive-foreground: #fbf1c7;
+
+  --dark-background: #282828;
+  --dark-foreground: #ebdbb2;
+  --dark-card: #3c3836;
+  --dark-card-foreground: #ebdbb2;
+  --dark-primary: #83a598;
+  --dark-primary-foreground: #282828;
+  --dark-secondary: #504945;
+  --dark-secondary-foreground: #ebdbb2;
+  --dark-muted: #665c54;
+  --dark-muted-foreground: #a89984;
+  --dark-accent: #fe8019;
+  --dark-accent-foreground: #282828;
+  --dark-destructive: #fb4934;
+  --dark-destructive-foreground: #282828;
+}
+
+@theme {
+  --color-muted-foreground: light-dark(var(--light-muted-foreground), var(--dark-muted-foreground));
+  --color-muted: light-dark(var(--light-muted), var(--dark-muted));
+  --color-foreground: light-dark(var(--light-foreground), var(--dark-foreground));
+  --color-background: light-dark(var(--light-background), var(--dark-background));
+}
+
+body {
+  font-family: 'Fira Code';
+  color-scheme: light dark;
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+}
+
+.light {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
