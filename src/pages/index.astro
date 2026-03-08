@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import EducationSection from "../components/sections/EducationSection.astro";
 import WorkSection from "../components/sections/WorkSection.astro";
 import Contact from "../components/Contact.astro";
+import CommandPalette from "../components/CommandPalette.astro";
 ---
 
 <Layout>
@@ -27,7 +28,13 @@ import Contact from "../components/Contact.astro";
 		<WorkSection />
 		<EducationSection />
 	</main>
+	<footer class="flex justify-center mt-2">
+		<span class="text-sm text-muted"
+			><kbd>ctrl + k</kbd> for command palette</span
+		>
+	</footer>
 
+	<CommandPalette />
 	<style>
 		.name {
 			animation:

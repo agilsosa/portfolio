@@ -37,6 +37,7 @@
   --color-muted: light-dark(var(--light-muted), var(--dark-muted));
   --color-foreground: light-dark(var(--light-foreground), var(--dark-foreground));
   --color-background: light-dark(var(--light-background), var(--dark-background));
+  --color-card-background: light-dark(var(--light-card), var(--dark-card));
 }
 
 body {

@@ -3,6 +3,7 @@ import ContactButton from "./ContactButton.astro";
 import Mail from "../assets/mail.svg";
 import Github from "../assets/github.svg";
 import Linkedin from "../assets/linkedin.svg";
+import File from "../assets/file.svg";
 ---
 
 <nav class="mt-2">
@@ -21,6 +22,11 @@ import Linkedin from "../assets/linkedin.svg";
             Icon={Linkedin}
             href="https://www.linkedin.com/in/agust%C3%ADn-gil-537522355/"
             label="linkedin"
+        />
+        <ContactButton
+            Icon={File}
+            href="/portfolio/Agustin_Gil_CV.pdf"
+            label="curriculum-vitae"
         />
     </ul>
 </nav>
