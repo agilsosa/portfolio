@@ -42,6 +42,19 @@ import Search from "../assets/search.svg";
     </div>
 </div>
 
+<footer
+    class="fixed bottom-0 bg-muted/95 md:bg-muted/20 w-full flex justify-center pb-2"
+>
+    <span class="text-sm text-muted-foreground"
+        ><kbd class="hidden md:inline">ctrl + k</kbd><span
+            id="mobile-open"
+            class="inline md:hidden underline underline-offset-4 cursor-pointer"
+        >
+            tap here</span
+        > for command palette</span
+    >
+</footer>
+
 <style>
     @keyframes paletteIn {
         from {
@@ -68,6 +81,7 @@ import Search from "../assets/search.svg";
     const palette = document.querySelector("#command-palette")!;
     const container = document.querySelector("#command-palette-container")!;
     const backdrop = document.querySelector("#command-palette-backdrop")!;
+    const mobileButton = document.querySelector("#mobile-open")!;
     const list = palette.querySelector("ul")!;
     const input = palette.querySelector("input")!;
 
@@ -243,6 +257,8 @@ import Search from "../assets/search.svg";
             return;
         }
     });
+
+    mobileButton.addEventListener("click", open);
 
     input.addEventListener("input", () => filter(input.value));
 

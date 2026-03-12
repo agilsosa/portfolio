@@ -7,7 +7,7 @@ import CommandPalette from "../components/CommandPalette.astro";
 ---
 
 <Layout>
-	<header class="mb-4">
+	<header class="mb-4 sm:px-[20%] px-12">
 		<div class="inline-block">
 			<h1
 				class="name sm:text-5xl text-4xl font-bold tracking-wide border-r-4 border-solid w-full whitespace-nowrap overflow-hidden sm:h-[3.2rem] h-10"
@@ -18,7 +18,7 @@ import CommandPalette from "../components/CommandPalette.astro";
 		<h2 class="mt-1 mb-2 font-bold">Systems Engineer - Web Developer</h2>
 		<Contact />
 	</header>
-	<main>
+	<main class="sm:px-[20%] px-12">
 		<p class="text-sm">
 			I'm a Systems Engineer and Web Developer who enjoys working across
 			the full stack, from the infrastructure that keeps things running to
@@ -28,11 +28,6 @@ import CommandPalette from "../components/CommandPalette.astro";
 		<WorkSection />
 		<EducationSection />
 	</main>
-	<footer class="flex justify-center mt-2">
-		<span class="text-sm text-muted"
-			><kbd>ctrl + k</kbd> for command palette</span
-		>
-	</footer>
 
 	<CommandPalette />
 	<style>
