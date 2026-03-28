@@ -49,15 +49,16 @@
     --color-card-background: light-dark(var(--light-card), var(--dark-card));
 }
 
-html {
-    color-scheme: light dark;
-}
+@layer base {
+    html {
+        color-scheme: light dark;
+    }
 
-body {
-    font-family: var(--font-lilex);
-    color-scheme: inherit;
-    color: var(--color-foreground);
-    background-color: var(--color-background);
+    body {
+        font-family: var(--font-lilex);
+        color: var(--color-foreground);
+        background-color: var(--color-background);
+    }
 }
 
 .light {
