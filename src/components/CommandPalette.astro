@@ -5,6 +5,10 @@ import Search from "../assets/search.svg";
 <div
     id="command-palette-container"
     class="fixed inset-0 items-center justify-center hidden z-50"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Command palette"
+    aria-hidden="true"
 >
     <div
         id="command-palette-backdrop"
@@ -16,12 +20,20 @@ import Search from "../assets/search.svg";
         id="command-palette"
         class="relative bg-card-background rounded-md w-120 max-w-[90vw] shadow-2xl overflow-hidden"
         style="animation: paletteIn 0.15s ease-out;"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="command-listbox"
     >
         <div class="flex items-center gap-3 px-4 py-3 border-b border-border">
             <Search />
             <input
                 type="text"
+                id="command-input"
                 placeholder="Search commands..."
+                aria-label="Search commands"
+                aria-autocomplete="list"
+                aria-controls="command-listbox"
+                aria-activedescendant=""
                 class="focus:outline-0 w-full text-sm bg-transparent placeholder:text-muted-foreground"
             />
             <kbd
@@ -30,7 +42,13 @@ import Search from "../assets/search.svg";
             >
         </div>
 
-        <ul class="py-1.5 max-h-72 overflow-y-auto"></ul>
+        <ul
+            id="command-listbox"
+            class="py-1.5 max-h-72 overflow-y-auto"
+            role="listbox"
+            aria-label="Commands"
+        >
+        </ul>
 
         <div
             class="px-4 py-2 border-t border-border gap-4 text-xs text-muted-foreground hidden md:flex"
@@ -82,8 +100,8 @@ import Search from "../assets/search.svg";
     const container = document.querySelector("#command-palette-container")!;
     const backdrop = document.querySelector("#command-palette-backdrop")!;
     const mobileButton = document.querySelector("#mobile-open")!;
-    const list = palette.querySelector("ul")!;
-    const input = palette.querySelector("input")!;
+    const list = document.querySelector("#command-listbox")!;
+    const input = document.querySelector("#command-input") as HTMLInputElement;
 
     interface CommandPaletteItem {
         id: number;
@@ -136,6 +154,7 @@ import Search from "../assets/search.svg";
 
     let filtered: CommandPaletteItem[] = [...items];
     let currentIndex = 0;
+    let previousActiveElement: HTMLElement | null = null;
 
     function render() {
         list.innerHTML = "";
@@ -144,6 +163,7 @@ import Search from "../assets/search.svg";
             const empty = document.createElement("li");
             empty.className =
                 "px-4 py-6 text-sm text-muted-foreground text-center";
+            empty.setAttribute("role", "status");
             empty.textContent = "No commands found.";
             list.appendChild(empty);
             return;
@@ -152,6 +172,11 @@ import Search from "../assets/search.svg";
         filtered.forEach((item, idx) => {
             const li = document.createElement("li");
             li.id = `item-${item.id}`;
+            li.setAttribute("role", "option");
+            li.setAttribute(
+                "aria-selected",
+                idx === currentIndex ? "true" : "false",
+            );
             li.className = `hover:bg-muted mx-1.5 px-3 py-2 rounded text-sm cursor-pointer flex items-center gap-2 transition-colors ${
                 idx === currentIndex ? "bg-muted" : ""
             }`;
@@ -161,9 +186,16 @@ import Search from "../assets/search.svg";
                 close();
             });
 
+            li.addEventListener("mouseenter", () => {
+                currentIndex = idx;
+                updateActiveDescendant();
+                updateSelection();
+            });
+
             const iconWrapper = document.createElement("span");
             iconWrapper.className =
                 "w-4 h-4 shrink-0 text-muted-foreground [&>svg]:w-4 [&>svg]:h-4";
+            iconWrapper.setAttribute("aria-hidden", "true");
             iconWrapper.innerHTML = item.icon;
 
             const btn = document.createElement("button");
@@ -181,6 +213,30 @@ import Search from "../assets/search.svg";
         active?.scrollIntoView({ block: "nearest" });
     }
 
+    function updateActiveDescendant() {
+        if (filtered[currentIndex]) {
+            input.setAttribute(
+                "aria-activedescendant",
+                `item-${filtered[currentIndex].id}`,
+            );
+        } else {
+            input.setAttribute("aria-activedescendant", "");
+        }
+    }
+
+    function updateSelection() {
+        const options = list.querySelectorAll('[role="option"]');
+        options.forEach((opt, idx) => {
+            const filteredIdx = filtered.findIndex(
+                (f) => f.id === parseInt(opt.id.replace("item-", "")),
+            );
+            opt.setAttribute(
+                "aria-selected",
+                filteredIdx === currentIndex ? "true" : "false",
+            );
+        });
+    }
+
     function filter(query: string) {
         const q = query.toLowerCase().trim();
         filtered = q
@@ -196,24 +252,38 @@ import Search from "../assets/search.svg";
         }
 
         currentIndex = 0;
+        updateActiveDescendant();
         render();
     }
 
     function open() {
+        previousActiveElement = document.activeElement as HTMLElement;
         filter("");
         input.value = "";
         container.classList.remove("hidden");
         container.classList.add("flex");
+        container.setAttribute("aria-hidden", "false");
+        palette.setAttribute("aria-expanded", "true");
+        document.body.style.overflow = "hidden";
         input.focus();
+        updateActiveDescendant();
     }
 
     function close() {
         container.classList.add("hidden");
         container.classList.remove("flex");
+        container.setAttribute("aria-hidden", "true");
+        palette.setAttribute("aria-expanded", "false");
+        input.setAttribute("aria-activedescendant", "");
         input.value = "";
+        document.body.style.overflow = "";
+        if (previousActiveElement) {
+            previousActiveElement.focus();
+            previousActiveElement = null;
+        }
     }
 
-    document.addEventListener("keydown", (e) => {
+    function handleKeydown(e: KeyboardEvent) {
         const isOpen = container.classList.contains("flex");
 
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -234,6 +304,8 @@ import Search from "../assets/search.svg";
             e.preventDefault();
             if (filtered.length === 0) return;
             currentIndex = (currentIndex + 1) % filtered.length;
+            updateActiveDescendant();
+            updateSelection();
             render();
             return;
         }
@@ -243,6 +315,8 @@ import Search from "../assets/search.svg";
             if (filtered.length === 0) return;
             currentIndex =
                 (currentIndex - 1 + filtered.length) % filtered.length;
+            updateActiveDescendant();
+            updateSelection();
             render();
             return;
         }
@@ -256,7 +330,15 @@ import Search from "../assets/search.svg";
             }
             return;
         }
-    });
+
+        if (e.key === "Tab") {
+            e.preventDefault();
+            close();
+            return;
+        }
+    }
+
+    document.addEventListener("keydown", handleKeydown);
 
     mobileButton.addEventListener("click", open);
 

@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
-import "@fontsource/fira-code";
-import "@fontsource/fira-code/700.css";
+import { Font } from "astro:assets";
 ---
 
 <!doctype html>
@@ -18,6 +17,19 @@ import "@fontsource/fira-code/700.css";
 			the interfaces people actually interact with. I like building things
 			that are clean, practical, and make sense to use."
         />
+        <Font cssVariable="--font-lilex" preload />
+        <script is:inline>
+            (function () {
+                const stored = localStorage.getItem("theme");
+                const theme =
+                    stored ||
+                    (window.matchMedia("(prefers-color-scheme: dark)").matches
+                        ? "dark"
+                        : "light");
+                document.documentElement.classList.remove("dark", "light");
+                document.documentElement.classList.add(theme);
+            })();
+        </script>
         <title>Agustín Gil</title>
     </head>
     <body class="py-8">
