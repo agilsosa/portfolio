@@ -9,7 +9,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   site: "https://agilsosa.github.io",
-  base: "portfolio",
+  base: "/portfolio",
   fonts: [
     {
       name: "Lilex",
